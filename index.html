@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -107,7 +107,7 @@
               <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
               <input id="searchInput" class="bg-transparent border-none text-sm w-full outline-none text-slate-700 font-semibold py-2.5 placeholder:text-slate-400" placeholder="Buscar..." />
               <div class="h-6 w-px bg-slate-200 mx-1"></div>
-              <select id="filterStatus" class="bg-transparent text-[11px] font-bold text-slate-500 outline-none hover:text-panBlue cursor-pointer py-2 pr-2 uppercase tracking-wider"><option value="">TODOS</option><option value="COMPROMETIDO">COMPROMETIDO</option><option value="RECIBIDA">RECIBIDA</option><option value="AUTORIZADA">AUTORIZADA</option><option value="AGENDADA_RECOLECCION">AGENDADA</option><option value="PENDIENTE_RECOGER">PENDIENTE RECOGER</option><option value="PARCIALMENTE_RECOGIDA">PARCIAL</option><option value="RECOGIDA">RECOGIDA</option><option value="VENCIDA">VENCIDA</option><option value="EN_DESPACHO">EN DESPACHO</option><option value="REVISION_DIRECCION">EN DIRECCIÓN</option><option value="PENDIENTE_VALIDACION">EN VALIDACIÓN</option><option value="TURNADA_ENTREGA">EN BODEGA</option><option value="ENTREGADA">ENTREGADA</option><option value="EN_COMPROBACION">EN COMPROBACIÓN</option><option value="COMPROBADA">COMPROBADA</option><option value="CANCELADA">CANCELADA</option></select>
+              <select id="filterStatus" class="bg-transparent text-[11px] font-bold text-slate-500 outline-none hover:text-panBlue cursor-pointer py-2 pr-2 uppercase tracking-wider"><option value="">TODOS</option><option value="COMPROMETIDO">COMPROMETIDO</option><option value="RECIBIDA">RECIBIDA</option><option value="AUTORIZADA">AUTORIZADA</option><option value="EN_DESPACHO">EN DESPACHO</option><option value="AGENDADA_RECOLECCION">AGENDADA</option><option value="PENDIENTE_RECOGER">PENDIENTE RECOGER</option><option value="PARCIALMENTE_RECOGIDA">PARCIAL</option><option value="RECOGIDA">RECOGIDA</option><option value="VENCIDA">VENCIDA</option><option value="EN_COMPROBACION">EN COMPROBACIÓN</option><option value="ENTREGADA">ENTREGADA</option><option value="COMPROBADA">COMPROBADA</option><option value="CANCELADA">CANCELADA</option></select>
               <button type="button" id="btnRefresh" class="h-9 w-9 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-panBlue hover:border-panBlue transition flex items-center justify-center shadow-sm"><i class="fa-solid fa-rotate text-xs"></i></button>
             </div>
             <button type="button" id="btnNew" class="h-12 md:h-auto px-6 rounded-xl bg-panBlue hover:bg-panBlue-light text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5 active:translate-y-0"><i class="fa-solid fa-plus"></i> <span class="uppercase tracking-wider">Nuevo</span></button>
@@ -136,7 +136,16 @@
           </div>
           <button type="button" onclick="UI.closeModal('modalForm')" class="h-10 w-10 rounded-full bg-white border-2 border-slate-100 hover:bg-red-50 hover:text-red-500 transition flex items-center justify-center group"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
+        <div id="formTabs" class="px-6 py-3 border-b border-slate-100 bg-white flex gap-2 overflow-x-auto custom-scrollbar">
+          <button type="button" id="tabBtnDatos" data-form-tab-btn="datos" onclick="UI.showFormTab('datos')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-id-card"></i> Datos generales</button>
+          <button type="button" id="tabBtnAgenda" data-form-tab-btn="agenda" onclick="UI.showFormTab('agenda')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-calendar-check"></i> Agenda</button>
+          <button type="button" id="tabBtnRecoleccion" data-form-tab-btn="recoleccion" onclick="UI.showFormTab('recoleccion')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-hand-holding-heart"></i> Recolección</button>
+          <button type="button" id="tabBtnComprobacion" data-form-tab-btn="comprobacion" onclick="UI.showFormTab('comprobacion')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-clipboard-check"></i> Comprobación</button>
+          <button type="button" id="tabBtnHistorial" data-form-tab-btn="historial" onclick="UI.showFormTab('historial')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-clock-rotate-left"></i> Historial</button>
+          <button type="button" id="tabBtnMovimientos" data-form-tab-btn="movimientos" onclick="UI.showFormTab('movimientos')" class="px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border-2 transition whitespace-nowrap"><i class="fa-solid fa-boxes-stacked"></i> Movimientos</button>
+        </div>
         <div class="p-6 md:p-8 overflow-y-auto space-y-8 custom-scrollbar modal-scroll bg-white/80 backdrop-blur-xl flex-1 z-10">
+          <div id="datosTabPanel" data-form-tab-panel="datos" class="space-y-8">
           <form id="dynamicForm" class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-6 content-start"></form>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="border-2 border-slate-100 rounded-3xl p-6 bg-slate-50/50 shadow-sm">
@@ -159,8 +168,9 @@
               <div><label class="block text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest mb-2 ml-1">Cant. Real Entregada</label><input id="cCantEntregada" type="number" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-emerald-900 focus:border-emerald-500 outline-none font-bold" placeholder="Auto" /></div>
             </div>
           </div>
+          </div>
           <div id="gestionOpsSection" class="hidden space-y-6">
-            <div id="agendaCard" class="border-2 border-blue-500/20 bg-blue-50/30 rounded-3xl p-6 transition-all shadow-sm">
+            <div id="agendaCard" data-form-tab-panel="agenda" class="border-2 border-blue-500/20 bg-blue-50/30 rounded-3xl p-6 transition-all shadow-sm">
                 <h4 class="font-bold text-panBlue text-base mb-6 border-b border-blue-200/60 pb-4"><i class="fa-solid fa-calendar-check"></i> Agenda de Recolección</h4>
               <div id="agWarning" class="hidden mb-4 text-xs font-bold px-4 py-3 rounded-2xl border"></div>
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -175,7 +185,7 @@
               </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div id="recoleccionCard" class="border-2 border-amber-500/20 bg-amber-50/30 rounded-3xl p-6 transition-all shadow-sm">
+              <div id="recoleccionCard" data-form-tab-panel="recoleccion" class="border-2 border-amber-500/20 bg-amber-50/30 rounded-3xl p-6 transition-all shadow-sm">
                 <h4 class="font-bold text-amber-800 text-base mb-5"><i class="fa-solid fa-hand-holding-heart"></i> Recolección Parcial</h4>
                 <div class="space-y-3">
                   <select id="recItem" class="w-full bg-white border-2 border-amber-100 rounded-xl px-4 py-3 text-xs text-slate-700 outline-none font-bold"></select>
@@ -186,7 +196,7 @@
                   <button type="button" onclick="App.registrarRecoleccion()" class="w-full px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase shadow-md"><i class="fa-solid fa-check"></i> Registrar recolección</button>
                 </div>
               </div>
-              <div id="comprobacionParcialCard" class="border-2 border-emerald-500/20 bg-emerald-50/30 rounded-3xl p-6 transition-all shadow-sm">
+              <div id="comprobacionParcialCard" data-form-tab-panel="comprobacion" class="border-2 border-emerald-500/20 bg-emerald-50/30 rounded-3xl p-6 transition-all shadow-sm">
                 <h4 class="font-bold text-emerald-800 text-base mb-5"><i class="fa-solid fa-clipboard-check"></i> Comprobación Parcial</h4>
                 <div class="space-y-3">
                   <select id="compItem" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-xs text-slate-700 outline-none font-bold"></select>
@@ -201,7 +211,7 @@
                 </div>
               </div>
             </div>
-            <div class="border-2 border-slate-100 rounded-3xl p-6 bg-slate-50/50 shadow-sm">
+            <div id="historialCard" data-form-tab-panel="historial" class="border-2 border-slate-100 rounded-3xl p-6 bg-slate-50/50 shadow-sm">
               <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
                 <h4 class="font-bold text-sm text-slate-700"><i class="fa-solid fa-clock-rotate-left"></i> Historial auditable</h4>
                 <div class="flex gap-2">
@@ -210,6 +220,13 @@
                 </div>
               </div>
               <div id="historialList" class="space-y-2 max-h-52 overflow-y-auto custom-scrollbar"></div>
+            </div>
+            <div id="movimientosCard" data-form-tab-panel="movimientos" class="border-2 border-slate-100 rounded-3xl p-6 bg-slate-50/50 shadow-sm">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
+                <h4 class="font-bold text-sm text-slate-700"><i class="fa-solid fa-boxes-stacked"></i> Movimientos de inventario</h4>
+                <input id="movSearch" type="text" placeholder="Buscar movimiento" oninput="App.filterMovimientos()" class="bg-white border-2 border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none font-semibold">
+              </div>
+              <div id="movimientosList" class="space-y-2 max-h-60 overflow-y-auto custom-scrollbar"></div>
             </div>
           </div>
         </div>
@@ -285,8 +302,8 @@ const CONFIG = {
 };
 
 let CATALOGOS = {};
-const Store={session:null,currentView:'dashboard',data:[],filteredData:[],stats:{},isEditMode:false,currentEditId:null,currentRecord:null,currentHistory:[],lastStockSummary:[], rowIndex: null};
-const API={async request(p){try{const r=await fetch(CONFIG.API_URL,{method:"POST",body:JSON.stringify(p)});return await r.json();}catch(e){console.error(e);return{ok:false,message:"Error de red"};}}};
+const Store={session:null,currentView:'dashboard',data:[],filteredData:[],stats:{},isEditMode:false,currentEditId:null,currentRecord:null,currentHistory:[],currentMovements:[],lastStockSummary:[], rowIndex: null};
+const API={async request(action,payload){try{const p=typeof action==='string'?Object.assign({tipoRegistro:action==='updateGestion'?'ACTUALIZAR':action},payload||{}):action;const r=await fetch(CONFIG.API_URL,{method:"POST",body:JSON.stringify(p)});return await r.json();}catch(e){console.error(e);return{ok:false,message:"Error de red"};}}};
 
 const UI={
     init(){ 
@@ -345,6 +362,40 @@ const UI={
     },
     toggleLoader(s){ document.getElementById('loadingOverlay').classList.toggle('hidden',!s); },
     closeModal(id){ document.getElementById(id).classList.add('hidden'); },
+    showFormTab(tab){
+        const panels = ['datos','agenda','recoleccion','comprobacion','historial','movimientos'];
+        panels.forEach(name => {
+            const panel = document.querySelector(`[data-form-tab-panel="${name}"]`);
+            if(panel) panel.classList.toggle('hidden', name !== tab || panel.dataset.available === 'false');
+            const btn = document.querySelector(`[data-form-tab-btn="${name}"]`);
+            if(btn) {
+                const active = name === tab;
+                btn.classList.toggle('bg-panBlue', active);
+                btn.classList.toggle('text-white', active);
+                btn.classList.toggle('border-panBlue', active);
+                btn.classList.toggle('bg-white', !active);
+                btn.classList.toggle('text-slate-500', !active);
+                btn.classList.toggle('border-slate-200', !active);
+            }
+        });
+    },
+    setFormTabAvailable(tab, available){
+        const panel = document.querySelector(`[data-form-tab-panel="${tab}"]`);
+        const btn = document.querySelector(`[data-form-tab-btn="${tab}"]`);
+        if(panel) {
+            panel.dataset.available = available ? 'true' : 'false';
+            if(!available) panel.classList.add('hidden');
+        }
+        if(btn) btn.classList.toggle('hidden', !available);
+    },
+    syncFormTabs(flags={}){
+        this.setFormTabAvailable('datos', true);
+        this.setFormTabAvailable('agenda', !!flags.agenda);
+        this.setFormTabAvailable('recoleccion', !!flags.recoleccion);
+        this.setFormTabAvailable('comprobacion', !!flags.comprobacion);
+        this.setFormTabAvailable('historial', !!flags.historial);
+        this.setFormTabAvailable('movimientos', !!flags.movimientos);
+    },
 
     mkInp(l,id,v,cl='',t='text'){ return `<div class="${cl}"><label class="block text-[10px] font-extrabold text-slate-500 mb-2 ml-1 uppercase tracking-widest">${l}</label><input id="${id}" type="${t}" value="${v||''}" class="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-panBlue outline-none transition font-semibold shadow-sm"/></div>`; },
 
@@ -399,7 +450,22 @@ const UI={
     buildForm(isInv, d={}){
         const f=document.getElementById('dynamicForm');f.innerHTML='';
         const view = Store.currentView;
-        const statusOptions = ['RECIBIDA','EN_DESPACHO','REVISION_DIRECCION','PENDIENTE_VALIDACION','TURNADA_ENTREGA','AUTORIZADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA','RECOGIDA','NO_RECOGIDA','VENCIDA','EN_COMPROBACION','ENTREGADA','COMPROBADA','CANCELADA'].map(s=>`<option value="${s}">${s.replaceAll('_',' ')}</option>`).join('');
+        // Limit the list of available statuses to those that are actually supported by the system.
+        const statusList = [
+            'RECIBIDA',
+            'AUTORIZADA',
+            'EN_DESPACHO',
+            'AGENDADA_RECOLECCION',
+            'PENDIENTE_RECOGER',
+            'PARCIALMENTE_RECOGIDA',
+            'RECOGIDA',
+            'VENCIDA',
+            'EN_COMPROBACION',
+            'ENTREGADA',
+            'COMPROBADA',
+            'CANCELADA'
+        ];
+        const statusOptions = statusList.map(s => `<option value="${s}">${s.replaceAll('_',' ')}</option>`).join('');
         
         f.innerHTML=this.mkInp('Fecha Solicitud','fFecha',d.Fecha_Recepcion?d.Fecha_Recepcion.split('T')[0]:new Date().toISOString().split('T')[0],'','date')+this.mkInp('Canal de Entrada','fCanal',d.Canal_Entrada,'text','col-span-1')+`<div class="col-span-1"><label class="block text-[10px] font-extrabold text-slate-500 mb-2 ml-1 uppercase tracking-widest">Estatus Actual</label><select id="fEstatus" class="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-panBlue outline-none font-bold cursor-pointer uppercase tracking-wider">${statusOptions}</select></div>`;
         
@@ -522,8 +588,9 @@ const App = {
         let html = '';
         if(rows.length === 0) html = `<tr><td colspan="${heads.length}" class="p-8 text-center text-slate-400 font-bold italic bg-white">No se encontraron registros.</td></tr>`;
         else { rows.forEach(r => { 
-            const bg = r.Estatus_Actual==='COMPROBADA'?'bg-emerald-100/50 text-emerald-700 border-emerald-200':(r.Estatus_Actual==='ENTREGADA'?'bg-orange-100/50 text-orange-700 border-orange-200':'bg-slate-100 text-slate-600 border-slate-200'); 
-            const badge = `<span class="px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider border ${bg}">${r.Estatus_Actual||'PENDIENTE'}</span>`; 
+            const displayStatus = (r.Recoleccion_Estatus === 'PARCIALMENTE_RECOGIDA' && r.Estatus_Actual === 'PENDIENTE_RECOGER') ? 'PARCIALMENTE_RECOGIDA' : r.Estatus_Actual;
+            const bg = displayStatus==='COMPROBADA'?'bg-emerald-100/50 text-emerald-700 border-emerald-200':(displayStatus==='ENTREGADA'||displayStatus==='RECOGIDA'||displayStatus==='PARCIALMENTE_RECOGIDA'?'bg-orange-100/50 text-orange-700 border-orange-200':'bg-slate-100 text-slate-600 border-slate-200'); 
+            const badge = `<span class="px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider border ${bg}">${displayStatus||'PENDIENTE'}</span>`; 
             const btnAcc = `<div class="flex gap-2">${isInv?'':`<button type="button" onclick='App.openEdit(${JSON.stringify(r)})' class="h-8 px-4 rounded-full bg-white border-2 border-slate-200 text-slate-500 font-bold text-[10px] uppercase tracking-wider hover:bg-panBlue hover:text-white hover:border-panBlue transition shadow-sm flex items-center gap-2"><i class="fa-solid fa-pen"></i> Editar</button>`}<button type="button" onclick='App.deleteRow(${Number(r.rowIndex || 0)})' class="h-8 w-8 rounded-full bg-red-50 border-2 border-red-100 text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition shadow-sm flex items-center justify-center" title="Eliminar"><i class="fa-solid fa-trash text-xs"></i></button></div>`;
             if(isInv) { 
                 const disp = Number((r.Disponible ?? r.Existencia) || 0);
@@ -540,6 +607,7 @@ const App = {
         if(Store.currentView === 'inventario') { document.getElementById('modalInv').classList.remove('hidden'); return; }
         Store.isEditMode=false; Store.currentEditId=null; Store.rowIndex=null; Store.currentRecord=null; UI.buildForm(false); document.getElementById('txtFolio').innerText = "NUEVO REGISTRO";
         document.getElementById('itemsContainer').innerHTML=''; document.getElementById('sectionComprobacion').classList.add('hidden'); document.getElementById('gestionOpsSection').classList.add('hidden'); document.getElementById('evidFile').value=''; document.getElementById('modalForm').classList.remove('hidden'); 
+        UI.syncFormTabs({}); UI.showFormTab('datos');
     },
     openEdit(r){ 
         Store.isEditMode=true; Store.currentEditId=r.Id_Gestion; Store.rowIndex=r.rowIndex; Store.currentRecord=r;
@@ -558,6 +626,7 @@ const App = {
             document.getElementById('cCantEntregada').value = r.Comprobacion_Cantidad_Entregada || '';
         }
         document.getElementById('modalForm').classList.remove('hidden'); 
+        UI.showFormTab('datos');
     },
     // Helpers WMS front-end: calculan pendientes sin depender de columnas ya migradas.
     parseItems(json){
@@ -584,7 +653,14 @@ const App = {
     },
     isCommittedStatus(s){
         const st = String(s||'').trim().toUpperCase().replace(/\s+/g,'_');
-        return ['EN_DESPACHO','PENDIENTE_DESPACHO','PENDIENTE_DIRECCION','TURNADA_ENTREGA','EN_VALIDACION','REVISION_DIRECCION','PENDIENTE_VALIDACION','AUTORIZADA','AGENDADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA'].includes(st);
+        // Only treat a gestion as "comprometida" when its status implies that items have been
+        // authorized and are awaiting pickup. This avoids showing partial panels for records
+        // whose statuses do not actually have pending pickup work.
+        return [
+            'EN_DESPACHO',
+            'AGENDADA_RECOLECCION',
+            'PENDIENTE_RECOGER'
+        ].includes(st);
     },
     fillGestionOps(r){
         document.getElementById('agFecha').value = (r.Recoleccion_Fecha_Agendada||'').split('T')[0] || '';
@@ -600,17 +676,35 @@ const App = {
         let picked = this.parseItems(r.Recoleccion_Items_JSON);
         if(!picked.length) picked = this.parseItems(r.Comprobacion_Total_Recogido_JSON);
         const explicitPending = this.parseItems(r.Recoleccion_Pendiente_JSON);
-        const recItems = explicitPending.length ? explicitPending : (this.isCommittedStatus(r.Estatus_Actual) ? this.subtractItems(authorized, picked) : []);
-        const compItems = this.parseItems(r.Comprobacion_Pendiente_JSON).length ? this.parseItems(r.Comprobacion_Pendiente_JSON) : this.subtractItems(picked, this.parseItems(r.Comprobacion_Items_JSON));
-        const hasAuthorized = this.isCommittedStatus(r.Estatus_Actual) || explicitPending.length > 0 || recItems.length > 0 || picked.length > 0 || compItems.length > 0;
+        // Determine recItems: if there is an explicit pending list use it, otherwise subtract
+        // items already picked from the authorized items only when the status is committed.
+        const st = String(r.Estatus_Actual||'').trim().toUpperCase().replace(/\s+/g,'_');
+        let recItems = [];
+        if(this.isCommittedStatus(st) && explicitPending.length) {
+            recItems = explicitPending;
+        } else if (this.isCommittedStatus(st)) {
+            recItems = this.subtractItems(authorized, picked);
+        }
+        // Determine compItems: first use any explicit pending list for comprobaciones;
+        // otherwise subtract already comprobadas from picked items.
+        let compItems = [];
+        const expCompPend = this.parseItems(r.Comprobacion_Pendiente_JSON);
+        const compReg = this.parseItems(r.Comprobacion_Items_JSON);
+        if(expCompPend.length) {
+            compItems = expCompPend;
+        } else {
+            compItems = this.subtractItems(picked, compReg);
+        }
+        const terminal = ['RECIBIDA','AUTORIZADA','CANCELADA','VENCIDA','COMPROBADA'].includes(st);
+        const canCollect = this.isCommittedStatus(st) && recItems.length > 0;
+        const canCheck = !terminal && picked.length > 0 && compItems.length > 0;
         document.getElementById('recItem').innerHTML = '<option value="">-- Insumo pendiente --</option>' + recItems.map(i=>`<option value="${i.Item}" data-max="${i.Cantidad}">${i.Item} | Pendiente: ${i.Cantidad}</option>`).join('');
         document.getElementById('compItem').innerHTML = '<option value="">-- Insumo por comprobar --</option>' + compItems.map(i=>`<option value="${i.Item}" data-max="${i.Cantidad}">${i.Item} | Pendiente: ${i.Cantidad}</option>`).join('');
-        document.getElementById('gestionOpsSection').classList.toggle('hidden', !hasAuthorized);
-        document.getElementById('agendaCard').classList.toggle('hidden', !hasAuthorized);
-        document.getElementById('recoleccionCard').classList.toggle('hidden', recItems.length===0);
-        document.getElementById('comprobacionParcialCard').classList.toggle('hidden', compItems.length===0);
+        document.getElementById('gestionOpsSection').classList.toggle('hidden', !Store.currentEditId);
+        UI.syncFormTabs({agenda: canCollect, recoleccion: canCollect, comprobacion: canCheck, historial: !!Store.currentEditId, movimientos: !!Store.currentEditId});
         this.renderAgendaWarning(r);
         document.getElementById('historialList').innerHTML = '<div class="text-xs text-slate-400 font-bold italic">Cargando historial...</div>';
+        document.getElementById('movimientosList').innerHTML = '<div class="text-xs text-slate-400 font-bold italic">Cargando movimientos...</div>';
     },
     renderAgendaWarning(r){
         const box = document.getElementById('agWarning');
@@ -632,19 +726,62 @@ const App = {
         const all = []
             .concat((r.historial||[]).map(x=>({t:x.Timestamp,a:x.Accion,u:x.Usuario,d:x.Observaciones})))
             .concat((r.entregas||[]).map(x=>({t:x.Timestamp,a:x.Tipo,u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad}`})))
-            .concat((r.comprobaciones||[]).map(x=>({t:x.Timestamp,a:'COMPROBACION',u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad_Comprobada}${x.Beneficiario_Final?' | '+x.Beneficiario_Final:''}${x.Folio_Comprobante?' | Folio '+x.Folio_Comprobante:''}`})));
+            .concat((r.comprobaciones||[]).map(x=>({t:x.Timestamp,a:'COMPROBACION',u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad_Comprobada}${x.Beneficiario_Final?' | '+x.Beneficiario_Final:''}${x.Folio_Comprobante?' | Folio '+x.Folio_Comprobante:''}`})))
+            // Include inventory movements when the backend provides them.
+            .concat((r.movimientos||[]).map(x=>({
+                t: x.Timestamp,
+                a: 'MOVIMIENTO',
+                u: x.Usuario_Crea || x.Usuario || '',
+                d: `${x.Tipo_Mov||x.Tipo||''}: ${x.Item||''} x ${x.Cantidad||0}${x.Proveedor? ' | Prov. '+x.Proveedor : ''}`
+            })));
         all.sort((a,b)=>String(b.t).localeCompare(String(a.t)));
         Store.currentHistory = all;
+        Store.currentMovements = (r.movimientos||[]).map(x=>({
+            t: x.Timestamp,
+            tipo: x.Tipo_Mov||x.Tipo||'MOVIMIENTO',
+            item: x.Item||'',
+            cantidad: x.Cantidad||0,
+            proveedor: x.Proveedor||'',
+            usuario: x.Usuario_Crea || x.Usuario || '',
+            detalle: x.Observaciones || ''
+        })).sort((a,b)=>String(b.t).localeCompare(String(a.t)));
         const actionFilter = document.getElementById('histActionFilter');
         const actions = [...new Set(all.map(x=>x.a).filter(Boolean))];
         actionFilter.innerHTML = '<option value="">TODAS</option>' + actions.map(a=>`<option value="${a}">${a}</option>`).join('');
         this.filterHistorial();
+        this.filterMovimientos();
     },
     filterHistorial(){
         const q = String(document.getElementById('histSearch')?.value || '').toLowerCase();
         const action = document.getElementById('histActionFilter')?.value || '';
         const rows = (Store.currentHistory||[]).filter(x => (!action || x.a===action) && (!q || Object.values(x).some(v=>String(v||'').toLowerCase().includes(q))));
         document.getElementById('historialList').innerHTML = rows.length ? rows.map(x=>`<div class="bg-white border border-slate-100 rounded-2xl px-4 py-3"><div class="flex justify-between gap-3"><span class="text-[10px] font-black text-panBlue uppercase">${x.a||''}</span><span class="text-[9px] font-bold text-slate-400">${String(x.t||'').split('T')[0]}</span></div><div class="text-xs text-slate-600 mt-1">${x.d||''}</div><div class="text-[10px] font-bold text-slate-400 mt-1">${x.u||''}</div></div>`).join('') : '<div class="text-xs text-slate-400 font-bold italic">Sin historial para ese filtro.</div>';
+    },
+    filterMovimientos(){
+        const q = String(document.getElementById('movSearch')?.value || '').toLowerCase();
+        const rows = (Store.currentMovements||[]).filter(x => !q || Object.values(x).some(v=>String(v||'').toLowerCase().includes(q)));
+        document.getElementById('movimientosList').innerHTML = rows.length ? rows.map(x=>`<div class="bg-white border border-slate-100 rounded-2xl px-4 py-3"><div class="flex justify-between gap-3"><span class="text-[10px] font-black text-panBlue uppercase">${x.tipo}</span><span class="text-[9px] font-bold text-slate-400">${String(x.t||'').split('T')[0]}</span></div><div class="text-xs text-slate-700 mt-1 font-bold">${x.item} x ${x.cantidad}</div><div class="text-[10px] text-slate-500 mt-1">${x.proveedor?('Proveedor: '+x.proveedor+' | '):''}${x.detalle||''}</div><div class="text-[10px] font-bold text-slate-400 mt-1">${x.usuario||''}</div></div>`).join('') : '<div class="text-xs text-slate-400 font-bold italic">Sin movimientos de inventario para este folio.</div>';
+    },
+    refreshOpenGestion(record, preferredTab='datos'){
+        if(!record) return;
+        Store.isEditMode = true;
+        Store.currentRecord = record;
+        Store.currentEditId = record.Id_Gestion;
+        Store.rowIndex = record.rowIndex;
+        document.getElementById('txtFolio').innerText = record.Id_Gestion || '';
+        UI.buildForm(false, record);
+        document.getElementById('itemsContainer').innerHTML='';
+        try{ JSON.parse(record.Inv_Items_JSON || '[]').forEach(i=>UI.appendItemRow(i)); }catch(e){}
+        document.getElementById('sectionComprobacion').classList.toggle('hidden', !['COMPROBADA','ENTREGADA','EN_COMPROBACION','RECOGIDA','PARCIALMENTE_RECOGIDA'].includes(String(record.Estatus_Actual||'').toUpperCase()));
+        this.fillGestionOps(record);
+        this.loadGestionDetalle(record.Id_Gestion);
+        if(document.getElementById('cMonto')) document.getElementById('cMonto').value = record.Comprobacion_Monto || '';
+        if(document.getElementById('cProveedor')) document.getElementById('cProveedor').value = record.Comprobacion_Proveedor || '';
+        if(document.getElementById('cExpedientes')) document.getElementById('cExpedientes').value = record.Comprobacion_Expedientes || '1';
+        if(document.getElementById('cCantEntregada')) document.getElementById('cCantEntregada').value = record.Comprobacion_Cantidad_Entregada || '';
+        document.getElementById('modalForm').classList.remove('hidden');
+        const btn = document.querySelector(`[data-form-tab-btn="${preferredTab}"]`);
+        UI.showFormTab(btn && !btn.classList.contains('hidden') ? preferredTab : 'datos');
     },
     async agendarRecoleccion(){
         if(!Store.currentEditId) return alert("Guarda primero la gestión.");
@@ -655,7 +792,7 @@ const App = {
         UI.toggleLoader(true);
         const r = await API.request({tipoRegistro:"AGENDAR_RECOLECCION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, fechaAgendada, fechaLimite, notas:document.getElementById('agNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
-        if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
+        if(r.ok){ if(r.record) this.refreshOpenGestion(r.record,'recoleccion'); await App.fetchData(); alert(r.message); } else alert(r.message);
     },
     async registrarRecoleccion(){
         const sel = document.getElementById('recItem');
@@ -667,14 +804,14 @@ const App = {
         UI.toggleLoader(true);
         const r = await API.request({tipoRegistro:"REGISTRAR_RECOLECCION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, itemsJson:JSON.stringify([{Item:sel.value,Cantidad:qty}]), fechaEntrega:document.getElementById('recFecha').value, receptor:document.getElementById('recReceptor').value, notas:document.getElementById('recNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
-        if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
+        if(r.ok){ if(r.record){ const nextTab = this.parseItems(r.record.Recoleccion_Pendiente_JSON).length ? 'recoleccion' : 'comprobacion'; this.refreshOpenGestion(r.record,nextTab); } await App.fetchData(); alert(r.message); } else alert(r.message);
     },
     async marcarNoRecogida(vencida){
         if(!confirm(vencida ? "¿Marcar como vencida y liberar lo pendiente?" : "¿Liberar lo pendiente como no recogido?")) return;
         UI.toggleLoader(true);
         const r = await API.request({tipoRegistro:"MARCAR_NO_RECOGIDA", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, vencida, notas:document.getElementById('agNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
-        if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
+        if(r.ok){ if(r.record) this.refreshOpenGestion(r.record,'movimientos'); await App.fetchData(); alert(r.message); } else alert(r.message);
     },
     async registrarComprobacion(){
         const sel = document.getElementById('compItem');
@@ -692,12 +829,20 @@ const App = {
         }
         const r = await API.request({tipoRegistro:"REGISTRAR_COMPROBACION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, itemsJson:JSON.stringify([{Item:sel.value,Cantidad:qty}]), fechaComprobacion:document.getElementById('compFecha').value, beneficiarioFinal:document.getElementById('compBeneficiario').value, monto:document.getElementById('compMonto').value, folioComprobante:document.getElementById('compFolio').value, evidenciaUrl, notas:document.getElementById('compNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
-        if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
+        if(r.ok){ if(r.record){ const nextTab = this.parseItems(r.record.Comprobacion_Pendiente_JSON).length ? 'comprobacion' : 'historial'; this.refreshOpenGestion(r.record,nextTab); } await App.fetchData(); alert(r.message); } else alert(r.message);
     },
     async saveForm(){ 
-        const items = UI.collectItems();
+        let items = UI.collectItems();
         if(items === null) return;
-        const p = { tipoRegistro: Store.isEditMode?"ACTUALIZAR":"GESTION", view: Store.currentView, Modulo: Store.currentView==='actor_social'?'ACTOR':Store.currentView.toUpperCase(), usuarioSesion: Store.session.user, Inv_Items_JSON: JSON.stringify(items), Id_Gestion: Store.currentEditId, rowIndex: Store.rowIndex };
+        // When editing, allow a status-only update by reusing the original items.
+        if(Store.isEditMode && items.length === 0 && Store.currentRecord?.Inv_Items_JSON){
+            try {
+                items = JSON.parse(Store.currentRecord.Inv_Items_JSON);
+            } catch(e) {
+                items = [];
+            }
+        }
+        const p = { view: Store.currentView, Modulo: Store.currentView==='actor_social'?'ACTOR':Store.currentView.toUpperCase(), usuarioSesion: Store.session.user, Inv_Items_JSON: JSON.stringify(items), Id_Gestion: Store.currentEditId, rowIndex: Store.rowIndex };
         ['fFecha:Fecha_Recepcion','fCanal:Canal_Entrada','fEstatus:Estatus_Actual','fNombre:Nombre_Solicitante','fTelefono:Telefono_Solicitante','fMunicipio:Municipio','fColonia:Colonia','fSeccion:Seccion','fDesc:Descripcion_Necesidad'].forEach(x=>{ const [id,k] = x.split(':'); const el = document.getElementById(id); if(el) p[k] = el.value; });
         if(document.getElementById('fPuesto')) p.Puesto_Solicitante = document.getElementById('fPuesto').value;
         if(document.getElementById('fIntermediario')) p.Intermediario_Entrega = document.getElementById('fIntermediario').value;
@@ -709,7 +854,7 @@ const App = {
         p.Comprobacion_Proveedor = document.getElementById('cProveedor').value; p.Comprobacion_Expedientes = document.getElementById('cExpedientes').value; p.Comprobacion_Cantidad_Entregada = document.getElementById('cCantEntregada').value; }
         
         UI.toggleLoader(true);
-        const r = await API.request(p);
+        const r = await API.request(Store.isEditMode?'updateGestion':'GESTION', p);
         if(r.ok){
             const file = document.getElementById('evidFile').files[0];
             if(file) {
@@ -751,7 +896,13 @@ const App = {
         if(!Number.isFinite(qty) || qty <= 0) return alert("La cantidad debe ser un número mayor a 0.");
         p.Cantidad = qty;
         UI.toggleLoader(true); const r = await API.request(p); UI.toggleLoader(false);
-        if(r.ok){ UI.closeModal('modalInv'); App.fetchData(); alert(r.message); document.getElementById('iCantMov').value=""; } else alert(r.message);
+        if(r.ok){
+            UI.closeModal('modalInv');
+            App.fetchData();
+            if(Store.currentEditId){ this.loadGestionDetalle(Store.currentEditId); }
+            alert(r.message);
+            document.getElementById('iCantMov').value="";
+        } else alert(r.message);
     },
     async deleteRow(rowIndex){
         if(!rowIndex) return alert("No se encontró el rowIndex del registro.");
