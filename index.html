@@ -107,7 +107,7 @@
               <i class="fa-solid fa-magnifying-glass text-slate-400 ml-2"></i>
               <input id="searchInput" class="bg-transparent border-none text-sm w-full outline-none text-slate-700 font-semibold py-2.5 placeholder:text-slate-400" placeholder="Buscar..." />
               <div class="h-6 w-px bg-slate-200 mx-1"></div>
-              <select id="filterStatus" class="bg-transparent text-[11px] font-bold text-slate-500 outline-none hover:text-panBlue cursor-pointer py-2 pr-2 uppercase tracking-wider"><option value="">TODOS</option><option value="COMPROMETIDO">COMPROMETIDO</option><option value="RECIBIDA">RECIBIDA</option><option value="AUTORIZADA">AUTORIZADA</option><option value="AGENDADA_RECOLECCION">AGENDADA</option><option value="PENDIENTE_RECOGER">PENDIENTE RECOGER</option><option value="PARCIALMENTE_RECOGIDA">PARCIAL</option><option value="RECOGIDA">RECOGIDA</option><option value="VENCIDA_RECOLECCION">VENCIDA</option><option value="EN_DESPACHO">EN DESPACHO</option><option value="REVISION_DIRECCION">EN DIRECCIÓN</option><option value="PENDIENTE_VALIDACION">EN VALIDACIÓN</option><option value="TURNADA_ENTREGA">EN BODEGA</option><option value="ENTREGADA">ENTREGADA</option><option value="EN_COMPROBACION">EN COMPROBACIÓN</option><option value="COMPROBADA">COMPROBADA</option><option value="CANCELADA">CANCELADA</option></select>
+              <select id="filterStatus" class="bg-transparent text-[11px] font-bold text-slate-500 outline-none hover:text-panBlue cursor-pointer py-2 pr-2 uppercase tracking-wider"><option value="">TODOS</option><option value="COMPROMETIDO">COMPROMETIDO</option><option value="RECIBIDA">RECIBIDA</option><option value="AUTORIZADA">AUTORIZADA</option><option value="AGENDADA_RECOLECCION">AGENDADA</option><option value="PENDIENTE_RECOGER">PENDIENTE RECOGER</option><option value="PARCIALMENTE_RECOGIDA">PARCIAL</option><option value="RECOGIDA">RECOGIDA</option><option value="VENCIDA">VENCIDA</option><option value="EN_DESPACHO">EN DESPACHO</option><option value="REVISION_DIRECCION">EN DIRECCIÓN</option><option value="PENDIENTE_VALIDACION">EN VALIDACIÓN</option><option value="TURNADA_ENTREGA">EN BODEGA</option><option value="ENTREGADA">ENTREGADA</option><option value="EN_COMPROBACION">EN COMPROBACIÓN</option><option value="COMPROBADA">COMPROBADA</option><option value="CANCELADA">CANCELADA</option></select>
               <button type="button" id="btnRefresh" class="h-9 w-9 rounded-lg bg-white border border-slate-200 text-slate-400 hover:text-panBlue hover:border-panBlue transition flex items-center justify-center shadow-sm"><i class="fa-solid fa-rotate text-xs"></i></button>
             </div>
             <button type="button" id="btnNew" class="h-12 md:h-auto px-6 rounded-xl bg-panBlue hover:bg-panBlue-light text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-lg hover:-translate-y-0.5 active:translate-y-0"><i class="fa-solid fa-plus"></i> <span class="uppercase tracking-wider">Nuevo</span></button>
@@ -161,7 +161,8 @@
           </div>
           <div id="gestionOpsSection" class="hidden space-y-6">
             <div id="agendaCard" class="border-2 border-blue-500/20 bg-blue-50/30 rounded-3xl p-6 transition-all shadow-sm">
-              <h4 class="font-bold text-panBlue text-base mb-6 border-b border-blue-200/60 pb-4"><i class="fa-solid fa-calendar-check"></i> Agenda de Recolección</h4>
+                <h4 class="font-bold text-panBlue text-base mb-6 border-b border-blue-200/60 pb-4"><i class="fa-solid fa-calendar-check"></i> Agenda de Recolección</h4>
+              <div id="agWarning" class="hidden mb-4 text-xs font-bold px-4 py-3 rounded-2xl border"></div>
               <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div><label class="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-2 ml-1">Fecha agendada</label><input id="agFecha" type="date" class="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-panBlue outline-none font-bold"></div>
                 <div><label class="block text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-2 ml-1">Fecha límite</label><input id="agLimite" type="date" class="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-panBlue outline-none font-bold"></div>
@@ -192,13 +193,22 @@
                   <input id="compCantidad" type="number" placeholder="Cantidad comprobada" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-bold">
                   <input id="compFecha" type="date" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-bold">
                   <input id="compBeneficiario" type="text" placeholder="Beneficiario final (si aplica)" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-semibold">
+                  <input id="compMonto" type="number" step="0.01" placeholder="Monto comprobado" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-bold">
+                  <input id="compFolio" type="text" placeholder="Folio / referencia del comprobante" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-semibold">
+                  <input id="compFile" type="file" class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer">
                   <input id="compNotas" type="text" placeholder="Notas de comprobación" class="w-full bg-white border-2 border-emerald-100 rounded-xl px-4 py-3 text-sm text-slate-800 outline-none font-semibold">
                   <button type="button" onclick="App.registrarComprobacion()" class="w-full px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase shadow-md"><i class="fa-solid fa-receipt"></i> Registrar comprobación</button>
                 </div>
               </div>
             </div>
             <div class="border-2 border-slate-100 rounded-3xl p-6 bg-slate-50/50 shadow-sm">
-              <h4 class="font-bold text-sm text-slate-700 mb-5"><i class="fa-solid fa-clock-rotate-left"></i> Historial auditable</h4>
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5">
+                <h4 class="font-bold text-sm text-slate-700"><i class="fa-solid fa-clock-rotate-left"></i> Historial auditable</h4>
+                <div class="flex gap-2">
+                  <input id="histSearch" type="text" placeholder="Buscar historial" oninput="App.filterHistorial()" class="bg-white border-2 border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none font-semibold">
+                  <select id="histActionFilter" onchange="App.filterHistorial()" class="bg-white border-2 border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none font-bold"><option value="">TODAS</option></select>
+                </div>
+              </div>
               <div id="historialList" class="space-y-2 max-h-52 overflow-y-auto custom-scrollbar"></div>
             </div>
           </div>
@@ -275,7 +285,7 @@ const CONFIG = {
 };
 
 let CATALOGOS = {};
-const Store={session:null,currentView:'dashboard',data:[],filteredData:[],stats:{},isEditMode:false,currentEditId:null,currentRecord:null,lastStockSummary:[], rowIndex: null};
+const Store={session:null,currentView:'dashboard',data:[],filteredData:[],stats:{},isEditMode:false,currentEditId:null,currentRecord:null,currentHistory:[],lastStockSummary:[], rowIndex: null};
 const API={async request(p){try{const r=await fetch(CONFIG.API_URL,{method:"POST",body:JSON.stringify(p)});return await r.json();}catch(e){console.error(e);return{ok:false,message:"Error de red"};}}};
 
 const UI={
@@ -379,6 +389,8 @@ const UI={
                     <span class="text-[10px] font-bold text-emerald-600">Disp: ${i.Disponible ?? i.Existencia}</span>
                     <span class="text-[10px] font-bold text-orange-600"><i class="fa-solid fa-calendar-day"></i> Pend: ${i.Pendiente_Recoger||i.Comprometido||0}</span>
                     <span class="text-[10px] font-bold text-slate-500"><i class="fa-solid fa-truck"></i> Prov: ${i.Proveedor}</span>
+                    <span class="text-[10px] font-bold text-blue-600"><i class="fa-solid fa-hand-holding-heart"></i> Ent: ${i.Entregado||0}</span>
+                    <span class="text-[10px] font-bold text-purple-600"><i class="fa-solid fa-clipboard-check"></i> Compb: ${i.Comprobado||0}</span>
                 </div>
             </div>
         `).join('');
@@ -387,7 +399,7 @@ const UI={
     buildForm(isInv, d={}){
         const f=document.getElementById('dynamicForm');f.innerHTML='';
         const view = Store.currentView;
-        const statusOptions = ['RECIBIDA','EN_DESPACHO','REVISION_DIRECCION','PENDIENTE_VALIDACION','TURNADA_ENTREGA','AUTORIZADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA','RECOGIDA','NO_RECOGIDA','VENCIDA_RECOLECCION','EN_COMPROBACION','ENTREGADA','COMPROBADA','CANCELADA'].map(s=>`<option value="${s}">${s.replaceAll('_',' ')}</option>`).join('');
+        const statusOptions = ['RECIBIDA','EN_DESPACHO','REVISION_DIRECCION','PENDIENTE_VALIDACION','TURNADA_ENTREGA','AUTORIZADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA','RECOGIDA','NO_RECOGIDA','VENCIDA','EN_COMPROBACION','ENTREGADA','COMPROBADA','CANCELADA'].map(s=>`<option value="${s}">${s.replaceAll('_',' ')}</option>`).join('');
         
         f.innerHTML=this.mkInp('Fecha Solicitud','fFecha',d.Fecha_Recepcion?d.Fecha_Recepcion.split('T')[0]:new Date().toISOString().split('T')[0],'','date')+this.mkInp('Canal de Entrada','fCanal',d.Canal_Entrada,'text','col-span-1')+`<div class="col-span-1"><label class="block text-[10px] font-extrabold text-slate-500 mb-2 ml-1 uppercase tracking-widest">Estatus Actual</label><select id="fEstatus" class="w-full bg-white border-2 border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 focus:border-panBlue outline-none font-bold cursor-pointer uppercase tracking-wider">${statusOptions}</select></div>`;
         
@@ -505,7 +517,7 @@ const App = {
     renderTable(rows){
         const isInv = Store.currentView==='inventario', isComp = Store.currentView==='comprobacion';
         let heads = [];
-        if(isInv) heads = ['INSUMO','FÍSICO','COMPROMETIDO','DISPONIBLE','PROVEEDOR','ACCIONES']; else if(isComp) heads = ['FOLIO','FECHA','BENEFICIARIO','APOYO ENTREGADO','EXP.','ESTATUS','ACCIONES']; else heads = ['FOLIO','FECHA','SOLICITANTE','DETALLE NECESIDAD','ESTATUS','ACCIONES'];
+        if(isInv) heads = ['INSUMO','FÍSICO','COMPROMETIDO','DISPONIBLE','PEND. RECOGER','ENTREGADO','COMPROBADO','PROVEEDOR','ACCIONES']; else if(isComp) heads = ['FOLIO','FECHA','BENEFICIARIO','APOYO ENTREGADO','EXP.','ESTATUS','ACCIONES']; else heads = ['FOLIO','FECHA','SOLICITANTE','DETALLE NECESIDAD','ESTATUS','ACCIONES'];
         document.getElementById('tableHeaderRow').innerHTML = heads.map(h=>`<th class="px-6 py-4">${h}</th>`).join('');
         let html = '';
         if(rows.length === 0) html = `<tr><td colspan="${heads.length}" class="p-8 text-center text-slate-400 font-bold italic bg-white">No se encontraron registros.</td></tr>`;
@@ -516,7 +528,7 @@ const App = {
             if(isInv) { 
                 const disp = Number((r.Disponible ?? r.Existencia) || 0);
                 const dispColor = disp > 0 ? 'text-emerald-600' : 'text-red-500';
-                html += `<tr class="border-b bg-white hover:bg-slate-50 transition"><td class="p-4 font-bold text-xs text-slate-700">${r.Item||''}</td><td class="p-4 text-xs font-black text-panBlue">${r.Fisico||0}</td><td class="p-4 text-xs font-bold text-amber-600">${r.Comprometido||0}</td><td class="p-4 text-xs font-black ${dispColor}">${disp}</td><td class="p-4 text-xs font-bold text-slate-500">${r.Proveedor||0}</td><td class="p-4">${btnAcc}</td></tr>`;
+                html += `<tr class="border-b bg-white hover:bg-slate-50 transition"><td class="p-4 font-bold text-xs text-slate-700">${r.Item||''}</td><td class="p-4 text-xs font-black text-panBlue">${r.Fisico||0}</td><td class="p-4 text-xs font-bold text-amber-600">${r.Comprometido||0}</td><td class="p-4 text-xs font-black ${dispColor}">${disp}</td><td class="p-4 text-xs font-bold text-orange-600">${r.Pendiente_Recoger||r.Comprometido||0}</td><td class="p-4 text-xs font-bold text-blue-600">${r.Entregado||0}</td><td class="p-4 text-xs font-bold text-purple-600">${r.Comprobado||0}</td><td class="p-4 text-xs font-bold text-slate-500">${r.Proveedor||0}</td><td class="p-4">${btnAcc}</td></tr>`;
         } else if(isComp) { 
             const apoyo = (r.Comprobacion_Monto && parseFloat(r.Comprobacion_Monto)>0) ? `<span class="text-emerald-600 font-black">${new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN'}).format(r.Comprobacion_Monto)}</span>` : "EN ESPECIE (Insumos)";
             html += `<tr class="border-b bg-white hover:bg-slate-50 transition"><td class="p-4 font-mono text-xs font-black text-panBlue">${r.Id_Gestion}</td><td class="p-4 text-xs font-bold">${r.Fecha_Recepcion?r.Fecha_Recepcion.split('T')[0]:''}</td><td class="p-4 font-bold text-xs text-slate-700">${r.Nombre_Solicitante}</td><td class="p-4 text-xs font-bold">${apoyo}</td><td class="p-4 text-xs text-center font-bold">${r.Comprobacion_Expedientes||'1'}</td><td class="p-4">${badge}</td><td class="p-4">${btnAcc}</td></tr>`;
@@ -547,6 +559,7 @@ const App = {
         }
         document.getElementById('modalForm').classList.remove('hidden'); 
     },
+    // Helpers WMS front-end: calculan pendientes sin depender de columnas ya migradas.
     parseItems(json){
         try {
             const raw = Array.isArray(json) ? json : JSON.parse(json || '[]');
@@ -570,13 +583,18 @@ const App = {
         return Object.values(map).filter(i=>i.Cantidad>0);
     },
     isCommittedStatus(s){
-        return ['EN_DESPACHO','PENDIENTE_DESPACHO','PENDIENTE_DIRECCION','TURNADA_ENTREGA','EN_VALIDACION','REVISION_DIRECCION','PENDIENTE_VALIDACION','AUTORIZADA','AGENDADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA'].includes(String(s||'').toUpperCase());
+        const st = String(s||'').trim().toUpperCase().replace(/\s+/g,'_');
+        return ['EN_DESPACHO','PENDIENTE_DESPACHO','PENDIENTE_DIRECCION','TURNADA_ENTREGA','EN_VALIDACION','REVISION_DIRECCION','PENDIENTE_VALIDACION','AUTORIZADA','AGENDADA','AGENDADA_RECOLECCION','PENDIENTE_RECOGER','PARCIALMENTE_RECOGIDA'].includes(st);
     },
     fillGestionOps(r){
         document.getElementById('agFecha').value = (r.Recoleccion_Fecha_Agendada||'').split('T')[0] || '';
         document.getElementById('agLimite').value = (r.Recoleccion_Fecha_Limite||'').split('T')[0] || '';
         document.getElementById('recFecha').value = new Date().toISOString().split('T')[0];
         document.getElementById('compFecha').value = new Date().toISOString().split('T')[0];
+        document.getElementById('compBeneficiario').value = '';
+        document.getElementById('compMonto').value = '';
+        document.getElementById('compFolio').value = '';
+        document.getElementById('compFile').value = '';
         document.getElementById('recReceptor').value = r.Intermediario_Entrega || r.Nombre_Solicitante || '';
         const authorized = this.parseItems(r.Inv_Items_JSON);
         let picked = this.parseItems(r.Recoleccion_Items_JSON);
@@ -584,15 +602,28 @@ const App = {
         const explicitPending = this.parseItems(r.Recoleccion_Pendiente_JSON);
         const recItems = explicitPending.length ? explicitPending : (this.isCommittedStatus(r.Estatus_Actual) ? this.subtractItems(authorized, picked) : []);
         const compItems = this.parseItems(r.Comprobacion_Pendiente_JSON).length ? this.parseItems(r.Comprobacion_Pendiente_JSON) : this.subtractItems(picked, this.parseItems(r.Comprobacion_Items_JSON));
-        const hasAuthorized = authorized.length > 0 || recItems.length > 0 || picked.length > 0;
+        const hasAuthorized = this.isCommittedStatus(r.Estatus_Actual) || explicitPending.length > 0 || recItems.length > 0 || picked.length > 0 || compItems.length > 0;
         document.getElementById('recItem').innerHTML = '<option value="">-- Insumo pendiente --</option>' + recItems.map(i=>`<option value="${i.Item}" data-max="${i.Cantidad}">${i.Item} | Pendiente: ${i.Cantidad}</option>`).join('');
         document.getElementById('compItem').innerHTML = '<option value="">-- Insumo por comprobar --</option>' + compItems.map(i=>`<option value="${i.Item}" data-max="${i.Cantidad}">${i.Item} | Pendiente: ${i.Cantidad}</option>`).join('');
         document.getElementById('gestionOpsSection').classList.toggle('hidden', !hasAuthorized);
         document.getElementById('agendaCard').classList.toggle('hidden', !hasAuthorized);
         document.getElementById('recoleccionCard').classList.toggle('hidden', recItems.length===0);
         document.getElementById('comprobacionParcialCard').classList.toggle('hidden', compItems.length===0);
+        this.renderAgendaWarning(r);
         document.getElementById('historialList').innerHTML = '<div class="text-xs text-slate-400 font-bold italic">Cargando historial...</div>';
     },
+    renderAgendaWarning(r){
+        const box = document.getElementById('agWarning');
+        const limit = document.getElementById('agLimite').value;
+        box.className = 'hidden mb-4 text-xs font-bold px-4 py-3 rounded-2xl border';
+        if(!limit) return;
+        const today = new Date(); today.setHours(0,0,0,0);
+        const due = new Date(limit + 'T00:00:00');
+        const days = Math.round((due - today) / 86400000);
+        if(days < 0) { box.textContent = 'Plazo vencido: libera o marca la gestión como vencida.'; box.className = 'mb-4 text-xs font-bold px-4 py-3 rounded-2xl border bg-red-50 border-red-200 text-red-600'; }
+        else if(days <= 2) { box.textContent = `Plazo cercano: quedan ${days} día(s) para recoger.`; box.className = 'mb-4 text-xs font-bold px-4 py-3 rounded-2xl border bg-amber-50 border-amber-200 text-amber-700'; }
+    },
+    // Historial auditable: mezcla acciones, entregas, comprobaciones y evidencias del folio.
     async loadGestionDetalle(folio){
         const r = await API.request({tipoRegistro:"GET_DETALLE_GESTION", Id_Gestion: folio});
         if(!r.ok) return;
@@ -601,16 +632,28 @@ const App = {
         const all = []
             .concat((r.historial||[]).map(x=>({t:x.Timestamp,a:x.Accion,u:x.Usuario,d:x.Observaciones})))
             .concat((r.entregas||[]).map(x=>({t:x.Timestamp,a:x.Tipo,u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad}`})))
-            .concat((r.comprobaciones||[]).map(x=>({t:x.Timestamp,a:'COMPROBACION',u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad_Comprobada}`})));
+            .concat((r.comprobaciones||[]).map(x=>({t:x.Timestamp,a:'COMPROBACION',u:x.Usuario_Crea,d:`${x.Item} x ${x.Cantidad_Comprobada}${x.Beneficiario_Final?' | '+x.Beneficiario_Final:''}${x.Folio_Comprobante?' | Folio '+x.Folio_Comprobante:''}`})));
         all.sort((a,b)=>String(b.t).localeCompare(String(a.t)));
-        document.getElementById('historialList').innerHTML = all.length ? all.map(x=>`<div class="bg-white border border-slate-100 rounded-2xl px-4 py-3"><div class="flex justify-between gap-3"><span class="text-[10px] font-black text-panBlue uppercase">${x.a||''}</span><span class="text-[9px] font-bold text-slate-400">${String(x.t||'').split('T')[0]}</span></div><div class="text-xs text-slate-600 mt-1">${x.d||''}</div><div class="text-[10px] font-bold text-slate-400 mt-1">${x.u||''}</div></div>`).join('') : '<div class="text-xs text-slate-400 font-bold italic">Sin historial todavía.</div>';
+        Store.currentHistory = all;
+        const actionFilter = document.getElementById('histActionFilter');
+        const actions = [...new Set(all.map(x=>x.a).filter(Boolean))];
+        actionFilter.innerHTML = '<option value="">TODAS</option>' + actions.map(a=>`<option value="${a}">${a}</option>`).join('');
+        this.filterHistorial();
+    },
+    filterHistorial(){
+        const q = String(document.getElementById('histSearch')?.value || '').toLowerCase();
+        const action = document.getElementById('histActionFilter')?.value || '';
+        const rows = (Store.currentHistory||[]).filter(x => (!action || x.a===action) && (!q || Object.values(x).some(v=>String(v||'').toLowerCase().includes(q))));
+        document.getElementById('historialList').innerHTML = rows.length ? rows.map(x=>`<div class="bg-white border border-slate-100 rounded-2xl px-4 py-3"><div class="flex justify-between gap-3"><span class="text-[10px] font-black text-panBlue uppercase">${x.a||''}</span><span class="text-[9px] font-bold text-slate-400">${String(x.t||'').split('T')[0]}</span></div><div class="text-xs text-slate-600 mt-1">${x.d||''}</div><div class="text-[10px] font-bold text-slate-400 mt-1">${x.u||''}</div></div>`).join('') : '<div class="text-xs text-slate-400 font-bold italic">Sin historial para ese filtro.</div>';
     },
     async agendarRecoleccion(){
         if(!Store.currentEditId) return alert("Guarda primero la gestión.");
         const fechaAgendada = document.getElementById('agFecha').value;
+        const fechaLimite = document.getElementById('agLimite').value;
         if(!fechaAgendada) return alert("Selecciona la fecha agendada.");
+        if(fechaLimite && fechaLimite < fechaAgendada) return alert("La fecha límite no puede ser anterior a la fecha agendada.");
         UI.toggleLoader(true);
-        const r = await API.request({tipoRegistro:"AGENDAR_RECOLECCION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, fechaAgendada, fechaLimite:document.getElementById('agLimite').value, notas:document.getElementById('agNotas').value, usuarioSesion:Store.session.user});
+        const r = await API.request({tipoRegistro:"AGENDAR_RECOLECCION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, fechaAgendada, fechaLimite, notas:document.getElementById('agNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
         if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
     },
@@ -641,7 +684,13 @@ const App = {
         if(!Number.isFinite(qty) || qty <= 0) return alert("La cantidad comprobada debe ser mayor a 0.");
         if(max && qty > max) return alert("No puedes comprobar más de lo pendiente.");
         UI.toggleLoader(true);
-        const r = await API.request({tipoRegistro:"REGISTRAR_COMPROBACION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, itemsJson:JSON.stringify([{Item:sel.value,Cantidad:qty}]), fechaComprobacion:document.getElementById('compFecha').value, beneficiarioFinal:document.getElementById('compBeneficiario').value, notas:document.getElementById('compNotas').value, usuarioSesion:Store.session.user});
+        let evidenciaUrl = '';
+        const compFile = document.getElementById('compFile').files[0];
+        if(compFile) {
+            const ev = await App.uploadEvidenceTipo(Store.currentEditId, compFile, 'COMPROBACION', document.getElementById('compNotas').value);
+            if(ev.ok) evidenciaUrl = ev.url; else alert("No se pudo subir la evidencia de comprobación: " + ev.message);
+        }
+        const r = await API.request({tipoRegistro:"REGISTRAR_COMPROBACION", Id_Gestion:Store.currentEditId, rowIndex:Store.rowIndex, itemsJson:JSON.stringify([{Item:sel.value,Cantidad:qty}]), fechaComprobacion:document.getElementById('compFecha').value, beneficiarioFinal:document.getElementById('compBeneficiario').value, monto:document.getElementById('compMonto').value, folioComprobante:document.getElementById('compFolio').value, evidenciaUrl, notas:document.getElementById('compNotas').value, usuarioSesion:Store.session.user});
         UI.toggleLoader(false);
         if(r.ok){ alert(r.message); UI.closeModal('modalForm'); App.fetchData(); } else alert(r.message);
     },
@@ -682,6 +731,10 @@ const App = {
     async uploadEvidence(folio, file){
         const base64 = await this.fileToBase64(file);
         return API.request({tipoRegistro:"EVIDENCIA_FILE", Id_Gestion: folio, tipoEvidencia: document.getElementById('evidType').value, base64, fileName: file.name, mimeType: file.type || 'application/octet-stream', usuarioSesion: Store.session.user, notas: document.getElementById('fDesc')?.value || ''});
+    },
+    async uploadEvidenceTipo(folio, file, tipo, notas){
+        const base64 = await this.fileToBase64(file);
+        return API.request({tipoRegistro:"EVIDENCIA_FILE", Id_Gestion: folio, tipoEvidencia: tipo, base64, fileName: file.name, mimeType: file.type || 'application/octet-stream', usuarioSesion: Store.session.user, notas: notas || ''});
     },
     applyProveedorOrden(){
         const id = document.getElementById('iOrdenProveedor').value;
